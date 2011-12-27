@@ -40,6 +40,12 @@ module ActsAsApi
         controller.render_for_api api_template, given_options.merge!(options).merge!(format => resource)
       end
     end
+    
+    def display_errors
+      # errors = json_or_xml? ? { :errors => resource.errors.full_messages } : resource.errors
+      errors = { :errors => resource.errors.full_messages }
+      controller.render format => errors, :status => :unprocessable_entity
+    end
 
   end
 end
